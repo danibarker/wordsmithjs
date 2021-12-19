@@ -1,5 +1,5 @@
 import tmi from "tmi.js";
-import { commands } from "./commands";
+import commands from "./commands";
 
 export const createClient = (username, password, channels, setMessages) => {
   let client = new tmi.Client({
@@ -13,7 +13,7 @@ export const createClient = (username, password, channels, setMessages) => {
     },
     channels: channels,
   });
-  client.on("join", (channel,username, self) => {
+  client.on("join", (channel, username, self) => {
     if (self) {
       setMessages((curr) => [
         { tags: { username: "Bot" }, message: `Joined channel: ${channel}` },
@@ -21,18 +21,18 @@ export const createClient = (username, password, channels, setMessages) => {
       ]);
     }
   });
-  client.on('disconnected', (reason) => {
+  client.on("disconnected", (reason) => {
     setMessages((curr) => [
       { tags: { username: "Bot" }, message: `Disconnected: ${reason}` },
       ...curr,
     ]);
-  })
-  client.on('connected', (address)=> {
+  });
+  client.on("connected", (address) => {
     setMessages((curr) => [
       { tags: { username: "Bot" }, message: `Connected: ${address}` },
       ...curr,
     ]);
-  })
+  });
   client.on("message", (channel, tags, message, self) => {
     setMessages((curr) => [{ message, tags }, ...curr]);
     if (self) return;

@@ -1,15 +1,15 @@
 import csw from "./csw.json";
-import alpha from "./alpha.json";
-export const commands = new Map();
-const define = (stem, ...options) => {
-  stem = stem.toUpperCase()
+import alpha from "../alpha.json";
+
+export const define = (stem, ...options) => {
+  stem = stem.toUpperCase();
   if (csw[stem]) {
     return `${stem}${csw[stem].csw ? "#" : ""}: ${csw[stem].definition}`;
   } else {
     return `${stem} is not a word`;
   }
 };
-const related = (stem, ...options) => {
+export const related = (stem, ...options) => {
   let allWords = Object.entries(csw);
   let re = new RegExp(`(?<![a-z])${stem}s?(?![a-z])`, "i");
   let filtered = allWords.filter((entry) => {
@@ -19,24 +19,19 @@ const related = (stem, ...options) => {
 
   return filtered.map((word) => word[0]).join(" ");
 };
-
-const beginsWith = (stem, ...options) => {
+export const beginsWith = (stem, ...options) => {
   return regex(`^${stem}`);
 };
-
-const contains = (stem, ...options) => {
+export const contains = (stem, ...options) => {
   return regex(stem);
 };
-
-const hidden = (stem, ...options) => {};
-
-const pattern = (stem, ...options) => {
+export const hidden = (stem, ...options) => {};
+export const pattern = (stem, ...options) => {
   stem = stem.replace("*", ".+");
   stem = stem.replace("?", ".");
   return regex(`^${stem}$`);
 };
-
-const regex = (stem, ...options) => {
+export const regex = (stem, ...options) => {
   let words = Object.keys(csw);
   let re = new RegExp(stem, "i");
   let output = [];
@@ -47,29 +42,24 @@ const regex = (stem, ...options) => {
   }
   return output;
 };
-
-const endsWith = (stem, ...options) => {
+export const endsWith = (stem, ...options) => {
   return regex(`${stem}$`);
 };
-
-const check = (stem, ...options) => {
-  stem = stem.toUpperCase()
+export const check = (stem, ...options) => {
+  stem = stem.toUpperCase();
   return !!csw[stem];
 };
-
-const hook = (stem, ...options) => {
-  stem = stem.toUpperCase()
+export const hook = (stem, ...options) => {
+  stem = stem.toUpperCase();
   if (csw[stem]) {
     return `Front hooks: ${csw[stem].frontHooks}\nBack hooks: ${csw[stem].backHooks}`;
   }
 };
-
-const randomWord = (wordLength, ...options) => {
+export const randomWord = (wordLength, ...options) => {
   let words = Object.keys(csw);
   return define(words[Math.floor(Math.random() * words.length)]);
 };
-
-const anagram = (rack, ...options) => {
+export const anagram = (rack, ...options) => {
   rack = rack.toUpperCase();
   rack = rack
     .split("")
@@ -80,31 +70,20 @@ const anagram = (rack, ...options) => {
       return 1;
     })
     .join("");
-  let words = alpha[rack];
+  let words;
+  if (/[^A-Z]/.test(rack)) {
+    
+  } else {
+    words = alpha[rack];
+  }
   if (words) {
     return words.join(" ");
   }
   return "0 words found";
 };
-
-const stem = (rack, ...options) => {
+export const stem = (rack, ...options) => {
   // to be implemented
 };
-
-const crypto = (cipher, ...options) => {
+export const crypto = (cipher, ...options) => {
   // to be implemented
 };
-commands.set("define", define);
-commands.set("related", related);
-commands.set("anagram", anagram);
-commands.set("begins", beginsWith);
-commands.set("ends", endsWith);
-commands.set("random", randomWord);
-commands.set("contains", contains);
-commands.set("hidden", hidden);
-commands.set("pattern", pattern);
-commands.set("regex", regex);
-commands.set("check", check);
-commands.set("hook", hook);
-commands.set("stem", stem);
-commands.set("crypto", crypto);
