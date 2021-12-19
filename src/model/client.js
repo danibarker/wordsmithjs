@@ -42,8 +42,9 @@ export const createClient = (username, password, channels, setMessages) => {
       let [command, ...args] = messagePart.split(" ");
 
       if (commands.has(command)) {
-        let messageToSend = commands.get(command)(...args);
-        client.say(channel, messageToSend);
+        commands
+          .get(command)(...args)
+          .then((messageToSend) => client.say(channel, messageToSend));
       }
     }
   });

@@ -1,89 +1,53 @@
-import csw from "./csw.json";
-import alpha from "../alpha.json";
-
-export const define = (stem, ...options) => {
-  stem = stem.toUpperCase();
-  if (csw[stem]) {
-    return `${stem}${csw[stem].csw ? "#" : ""}: ${csw[stem].definition}`;
-  } else {
-    return `${stem} is not a word`;
-  }
+import axios from 'axios'
+let host = 'http://dictionary-env.eba-vuan7pqx.us-east-1.elasticbeanstalk.com/'
+export const define = async (stem, ...options) => {
+  const answer = await axios.get(host+`define/${stem}`)
+  return answer.data
 };
-export const related = (stem, ...options) => {
-  let allWords = Object.entries(csw);
-  let re = new RegExp(`(?<![a-z])${stem}s?(?![a-z])`, "i");
-  let filtered = allWords.filter((entry) => {
-    let result = re.test(entry[1].definition);
-    return result;
-  });
-
-  return filtered.map((word) => word[0]).join(" ");
+export const related = async (stem, ...options) => {
+  const answer = await axios.get(host+`related/${stem}`)
+  return answer.data
 };
-export const beginsWith = (stem, ...options) => {
-  return regex(`^${stem}`);
+export const beginsWith = async (stem, ...options) => {
+  const answer = await axios.get(host+`begins/${stem}`)
+  return answer.data
 };
-export const contains = (stem, ...options) => {
-  return regex(stem);
+export const contains = async (stem, ...options) => {
+  const answer = await axios.get(host+`contains/${stem}`)
+  return answer.data
 };
-export const hidden = (stem, ...options) => {};
-export const pattern = (stem, ...options) => {
-  stem = stem.replace("*", ".+");
-  stem = stem.replace("?", ".");
-  return regex(`^${stem}$`);
+export const hidden = async (stem, ...options) => {};
+export const pattern = async (stem, ...options) => {
+  const answer = await axios.get(host+`pattern/${stem}`)
+  return answer.data
 };
-export const regex = (stem, ...options) => {
-  let words = Object.keys(csw);
-  let re = new RegExp(stem, "i");
-  let output = [];
-  for (let word of words) {
-    if (word.match(re)) {
-      output.push(word);
-    }
-  }
-  return output;
+export const regex = async (stem, ...options) => {
+  const answer = await axios.get(host+`regex/${stem}`)
+  return answer.data
 };
-export const endsWith = (stem, ...options) => {
-  return regex(`${stem}$`);
+export const endsWith = async (stem, ...options) => {
+  const answer = await axios.get(host+`ends/${stem}`)
+  return answer.data
 };
-export const check = (stem, ...options) => {
-  stem = stem.toUpperCase();
-  return !!csw[stem];
+export const check = async (stem, ...options) => {
+  const answer = await axios.get(host+`check/${stem}`)
+  return answer.data
 };
-export const hook = (stem, ...options) => {
-  stem = stem.toUpperCase();
-  if (csw[stem]) {
-    return `Front hooks: ${csw[stem].frontHooks}\nBack hooks: ${csw[stem].backHooks}`;
-  }
+export const hook = async (stem, ...options) => {
+  const answer = await axios.get(host+`hook/${stem}`)
+  return answer.data
 };
-export const randomWord = (wordLength, ...options) => {
-  let words = Object.keys(csw);
-  return define(words[Math.floor(Math.random() * words.length)]);
+export const randomWord = async (wordLength, ...options) => {
+  const answer = await axios.get(host+`random/${stem}`)
+  return answer.data
 };
-export const anagram = (rack, ...options) => {
-  rack = rack.toUpperCase();
-  rack = rack
-    .split("")
-    .sort((a, b) => {
-      if (a < b) {
-        return -1;
-      }
-      return 1;
-    })
-    .join("");
-  let words;
-  if (/[^A-Z]/.test(rack)) {
-    
-  } else {
-    words = alpha[rack];
-  }
-  if (words) {
-    return words.join(" ");
-  }
-  return "0 words found";
+export const anagram = async (rack, ...options) => {
+  const answer = await axios.get(host+`anagram/${rack}`)
+  return answer.data
 };
-export const stem = (rack, ...options) => {
+export const stem = async (rack, ...options) => {
   // to be implemented
 };
-export const crypto = (cipher, ...options) => {
+export const crypto = async (cipher, ...options) => {
   // to be implemented
 };

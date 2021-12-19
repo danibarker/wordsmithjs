@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { createClient } from "../client";
+import { createClient } from "../model/client";
 import { Button } from "../components/Button";
 const Main = styled.div`
   display: flex;
