@@ -1,20 +1,36 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
+import { SectionContainer } from "./SectionContainer";
 const ChannelItem = styled.div`
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  gap: 20px;
-  p {
-    margin: 0;
-  }
+  font-size:20px;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  align-items: end;
 `;
 const AddNewItem = styled.div`
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  margin: 20px;
+  padding-top: 10px;
+  justify-content: space-between;
+  input {
+    width: 300px;
+    padding: 0px 2px;
+    background: #333;
+    color: white;
+    font-size:20px;
+  }
 `;
 const List = styled.ul`
   list-style-type: none;
 `;
+
 const ChannelList = () => {
   const [channelList, setChannelList] = useState([]);
   const [channelToAdd, setChannelToAdd] = useState("");
@@ -28,7 +44,7 @@ const ChannelList = () => {
     localStorage.setItem("channels", JSON.stringify(newList));
   };
   return (
-    <div>
+    <SectionContainer>
       <h1>Channel List</h1>
       <List>
         {channelList.map((channel, index) => {
@@ -68,7 +84,7 @@ const ChannelList = () => {
           Add
         </Button>
       </AddNewItem>
-    </div>
+    </SectionContainer>
   );
 };
 export default ChannelList;

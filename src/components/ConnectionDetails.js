@@ -1,19 +1,40 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
-
+import { SectionContainer } from "./SectionContainer";
+const InputContainer = styled.div`
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 300px;
+  padding-bottom: 20px;
+`;
+const Input = styled.div`
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size:20px;
+  width: 500px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-bottom: 10px;
+  input {
+    padding: 0px 2px;
+    height: 27px;
+    background: #333;
+    color: white;
+    font-size: 20px;
+  }
+`;
 const ConnectionDetails = () => {
-  const InputContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 300px
-  `;
-  const Input = styled.div`
-    display: flex;
-    width: 300px;
-    justify-content: space-between;
-    
-  `;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   useEffect(() => {
@@ -27,7 +48,7 @@ const ConnectionDetails = () => {
     }
   }, []);
   return (
-    <div>
+    <SectionContainer>
       <h1>Connection Details</h1>
       <InputContainer>
         <Input>
@@ -53,7 +74,7 @@ const ConnectionDetails = () => {
       >
         Save
       </Button>
-    </div>
+    </SectionContainer>
   );
 };
 

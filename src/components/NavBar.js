@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "./Button";
 import "./NavBar.css";
 const NavBar = ({ client, setConnected }) => {
   return (
@@ -11,8 +12,8 @@ const NavBar = ({ client, setConnected }) => {
         }
       }}
     >
-      <Link to="/">Home</Link>
-      <Link to="/setup">Setup</Link>
+      <Link to="/"><Button>Home</Button></Link>
+      <Link to="/setup"><Button>Setup</Button></Link>
     </div>
   );
 };

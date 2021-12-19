@@ -3,9 +3,19 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
+
 let mainWindow;
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 900, height: 680 });
+  mainWindow = new BrowserWindow({
+    width: 900,
+    height: 750,
+    autoHideMenuBar: true,
+    // titleBarStyle: "hidden",
+    titleBarOverlay: {
+      color: "#2f3241",
+      symbolColor: "#74b1be",
+    },
+  });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"

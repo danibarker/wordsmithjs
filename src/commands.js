@@ -2,6 +2,7 @@ import csw from "./csw.json";
 import alpha from "./alpha.json";
 export const commands = new Map();
 const define = (stem, ...options) => {
+  stem = stem.toUpperCase()
   if (csw[stem]) {
     return `${stem}${csw[stem].csw ? "#" : ""}: ${csw[stem].definition}`;
   } else {
@@ -15,7 +16,8 @@ const related = (stem, ...options) => {
     let result = re.test(entry[1].definition);
     return result;
   });
-  return filtered;
+
+  return filtered.map((word) => word[0]).join(" ");
 };
 
 const beginsWith = (stem, ...options) => {
@@ -51,12 +53,12 @@ const endsWith = (stem, ...options) => {
 };
 
 const check = (stem, ...options) => {
+  stem = stem.toUpperCase()
   return !!csw[stem];
 };
 
-
-
 const hook = (stem, ...options) => {
+  stem = stem.toUpperCase()
   if (csw[stem]) {
     return `Front hooks: ${csw[stem].frontHooks}\nBack hooks: ${csw[stem].backHooks}`;
   }
@@ -68,12 +70,25 @@ const randomWord = (wordLength, ...options) => {
 };
 
 const anagram = (rack, ...options) => {
-  return alpha[rack].join(" ");
+  rack = rack.toUpperCase();
+  rack = rack
+    .split("")
+    .sort((a, b) => {
+      if (a < b) {
+        return -1;
+      }
+      return 1;
+    })
+    .join("");
+  let words = alpha[rack];
+  if (words) {
+    return words.join(" ");
+  }
+  return "0 words found";
 };
 
 const stem = (rack, ...options) => {
   // to be implemented
-  console.log("nothing");
 };
 
 const crypto = (cipher, ...options) => {
