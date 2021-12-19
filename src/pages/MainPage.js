@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createClient } from "../client";
 
 const MainPage = ({client, setClient, connected, setConnected}) => {
@@ -15,7 +15,7 @@ const MainPage = ({client, setClient, connected, setConnected}) => {
       setClient(newClient);
     }
     
-  }, []);
+  }, [setClient]);
   const disconnect = () => {
     client.disconnect();
     setConnected(false);
