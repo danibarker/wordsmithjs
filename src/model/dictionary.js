@@ -1,5 +1,5 @@
 import axios from 'axios'
-let host = 'http://dictionary-env.eba-vuan7pqx.us-east-1.elasticbeanstalk.com/'
+let host = 'https://us-central1-dictionary-c2faa.cloudfunctions.net/api/'
 export const define = async (stem, ...options) => {
   stem = encodeURIComponent(stem)
   const answer = await axios.get(host+`define/${stem}`)
@@ -54,8 +54,8 @@ export const hook = async (stem, ...options) => {
   const answer = await axios.get(host+`hook/${stem}`)
   return answer.data
 };
-export const randomWord = async (wordLength, ...options) => {
- 
+export const randomWord = async (stem, ...options) => {
+  
 
   const answer = await axios.get(host+`random/${stem}`)
   return answer.data
