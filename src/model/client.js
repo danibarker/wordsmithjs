@@ -1,7 +1,17 @@
 import tmi from "tmi.js";
-import commands from "./commands";
-
-export const createClient = (username, password, channels, setMessages) => {
+import * as dictionary from "./dictionary.js";
+export const createClient = async (
+  username,
+  password,
+  channels,
+  setMessages
+) => {
+  // get list of commands from server
+  let commandList;
+  try {
+    commandList = await dictionary.getCommands();
+    console.log("commandList", commandList);
+  } catch (error) {}
   let client = new tmi.Client({
     connection: {
       secure: true,
@@ -41,10 +51,10 @@ export const createClient = (username, password, channels, setMessages) => {
       let [, messagePart] = message.split("!");
       let [command, ...args] = messagePart.split(" ");
 
-      if (commands.has(command)) {
-        commands
-          .get(command)(...args)
-          .then((messageToSend) => client.say(channel, messageToSend));
+      if (commandList.includes(command)) {
+        dictionary.handleCommand(command, args.join(" ")).then((data) => {
+          client.say(channel, data);
+        });
       }
     }
   });

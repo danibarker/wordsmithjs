@@ -31,16 +31,24 @@ const Message = styled.div`
 const MainPage = ({ client, setClient, connected, setConnected }) => {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    let username = localStorage.getItem("username");
-    let password = localStorage.getItem("password");
-    let channels = localStorage.getItem("channels");
-    if (channels) {
-      channels = JSON.parse(channels);
-    }
-    if (username && password && channels) {
-      let newClient = createClient(username, password, channels, setMessages);
-      setClient(newClient);
-    }
+    const connectClient = async () => {
+      let username = localStorage.getItem("username");
+      let password = localStorage.getItem("password");
+      let channels = localStorage.getItem("channels");
+      if (channels) {
+        channels = JSON.parse(channels);
+      }
+      if (username && password && channels) {
+        let newClient = await createClient(
+          username,
+          password,
+          channels,
+          setMessages
+        );
+        setClient(newClient);
+      }
+    };
+    connectClient();
   }, [setClient]);
   const disconnect = () => {
     client.disconnect();

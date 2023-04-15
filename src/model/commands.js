@@ -1,17 +1,1 @@
-import * as dictionary from "./dictionary";
-const commands = new Map();
-commands.set("define", dictionary.define);
-commands.set("related", dictionary.related);
-commands.set("anagram", dictionary.anagram);
-commands.set("startswith", dictionary.beginsWith);
-commands.set("endswith", dictionary.endsWith);
-commands.set("random", dictionary.randomWord);
-commands.set("contains", dictionary.contains);
-commands.set("hidden", dictionary.hidden);
-commands.set("pattern", dictionary.pattern);
-commands.set("regex", dictionary.regex);
-commands.set("check", dictionary.check);
-commands.set("hook", dictionary.hook);
-commands.set("stem", dictionary.stem);
-commands.set("crypto", dictionary.crypto);
-export default commands;
+
