@@ -1,6 +1,6 @@
 {
   "name": "wordsmith",
-  "version": "0.1.0",
+  "version": "0.3.14",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -29,7 +29,7 @@
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
-    "release": "npm run react-build && electron-builder --publish=always",
+    "release": "npm run react-build && electron-builder --publish=always --windows portable",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
@@ -54,7 +54,8 @@
   "description": "Scrabble Twitch Bot",
   "author": "DaniB",
   "build": {
-    "appId": "com.wordsmith"
+    "appId": "com.wordsmith",
+    "icon": "public/W.ico"
   },
   "main": "public/electron.js",
   "homepage": "./"
